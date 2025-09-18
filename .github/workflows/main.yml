@@ -44,11 +44,13 @@ jobs:
 
       - name: Set DB credentials in .env
         run: |
-          php -r "file_put_contents('.env', str_replace('DB_HOST=127.0.0.1', 'DB_HOST=127.0.0.1', file_get_contents('.env')));"
-          php -r "file_put_contents('.env', str_replace('DB_DATABASE=homestead', 'DB_DATABASE=penjadwalan', file_get_contents('.env')));"
-          php -r "file_put_contents('.env', str_replace('DB_USERNAME=homestead', 'DB_USERNAME=root', file_get_contents('.env')));"
-          php -r "file_put_contents('.env', str_replace('DB_PASSWORD=secret', 'DB_PASSWORD=root', file_get_contents('.env')));"
-
+          sed -i 's/DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
+          sed -i 's/DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+          sed -i 's/DB_PORT=.*/DB_PORT=3306/' .env
+          sed -i 's/DB_DATABASE=.*/DB_DATABASE=penjadwalan/' .env
+          sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' .env
+          sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
+          
       - name: Generate application key
         run: php artisan key:generate
 
